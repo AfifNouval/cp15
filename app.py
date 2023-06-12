@@ -5,9 +5,9 @@ from pymongo import MongoClient
 app = Flask(__name__)
 
 password = 'sparta'
-cxn_str = f'mongodb+srv://Afif:sparta@cluster0.gurin3n.mongodb.net/?retryWrites=true&w=majority'
+cxn_str = f'mongodb+srv://Afif:{password}@cluster0.gurin3n.mongodb.net/?retryWrites=true&w=majority'
 client = MongoClient(cxn_str)
-db = client.dbsmknumaku
+db = client.dbsparta_plus_week3
 
 @app.route('/')
 def main():
@@ -17,6 +17,10 @@ def main():
 def get_restaurants():
     restaurants = list(db.restaurants.find({}, {'_id': False}))
     return jsonify({'result': 'success', 'restaurants': restaurants})
+
+@app.route('/map')
+def map_example():
+    return render_template('prac_map.html')
 
 @app.route('/restaurant/create', methods=["POST"])
 def create_restaurant():
@@ -48,6 +52,3 @@ def delete_restaurant():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)
-
-
-    
